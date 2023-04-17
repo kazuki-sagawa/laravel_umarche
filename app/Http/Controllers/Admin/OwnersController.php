@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Owner;
 use Illuminate\Http\Request;
+use App\Models\User; // Eloquent エロクアント
+use Illuminate\Support\Facades\DB; // QueryBuilder クエリビルダー
+use Carbon\Carbon;
 
 class OwnersController extends Controller
 {
@@ -19,8 +23,26 @@ class OwnersController extends Controller
      */
     public function index()
     {
-        //
+        $date_now = Carbon::now();
+        $date_parse = Carbon::parse(now());
+        echo $date_now->year;
+        echo $date_parse;
+
+        $e_all = Owner::all();
+        $q_get = DB::table('owners')->select('name', 'created_at')->get();
+        // $q_first = DB::table('owners')->select('name')->first();
+
+        // $c_test = collect([
+        //     'name' => 'テスト'
+        // ]);
+
+        // var_dump($q_first);
+
+        // dd($e_all, $q_get, $q_first, $c_test);
+
+        return view('admin.owners.index', compact('e_all', 'q_get'));
     }
+
 
     /**
      * Show the form for creating a new resource.
